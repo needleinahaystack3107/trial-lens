@@ -1,7 +1,7 @@
 # Trial Lens
 
 Describe a patient in plain words and find recruiting clinical trials whose eligibility text
-fits. A small project for learning **data engineering for AI**, one idea a day, on real
+fits. A small project for learning **data engineering for AI** on real
 life-sciences data.
 
 > A learning project. Not medical advice.
