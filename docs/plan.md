@@ -14,7 +14,7 @@ Workflow: brainstorm -> design (`design.md`) -> this plan -> implement one task 
 - [x] 7. Search and app — `pipeline/search.py`, `app.py`
 - [x] 8. Runner and committed gold parquet — `pipeline/run.py`
 - [x] 9. Daily refresh workflow — `.github/workflows/daily.yml`
-- [ ] 10. Push to GitHub and confirm the workflow is green
+- [x] 10. Push to GitHub and confirm the workflow is green
 - [ ] 11. Deploy on Streamlit Community Cloud
 
 ## Lessons
