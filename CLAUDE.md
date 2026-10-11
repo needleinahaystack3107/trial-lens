@@ -1,6 +1,6 @@
 # trial-lens
 
-A student-sized project that teaches data engineering for AI on public clinical trial data:
+A  project that teaches data engineering for AI on public clinical trial data:
 ClinicalTrials.gov API -> bronze -> silver -> gold star schema -> embedded chunks -> search app.
 
 ## Commands
