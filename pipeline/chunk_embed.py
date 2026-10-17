@@ -14,10 +14,24 @@ def chunk(nct_id, summary, criteria):
         "exclusion": parts[1] if len(parts) > 1 else "",
     }
     return [
-        (f"{nct_id}:{name}", nct_id, name, text.strip()[:MAX_CHARS])
+        (f"{nct_id}:{name}:{i}", nct_id, name, piece)
         for name, text in sections.items()
-        if text.strip()
+        for i, piece in enumerate(pieces(text))
     ]
+
+
+def pieces(text):
+    """Pack whole lines into pieces of at most MAX_CHARS, so long criteria are split, not cut off."""
+    out, current = [], ""
+    for line in (text or "").splitlines():
+        line = line.strip()
+        for start in range(0, len(line), MAX_CHARS):  # a single very long line is sliced
+            segment = line[start:start + MAX_CHARS]
+            if current and len(current) + 1 + len(segment) > MAX_CHARS:
+                out.append(current)
+                current = ""
+            current = f"{current}\n{segment}" if current else segment
+    return out + [current] if current else out
 
 
 def embed_texts(texts):

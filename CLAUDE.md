@@ -47,7 +47,6 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt   # setup
 
 ## Refine me (open questions to revisit while coding)
 
-- Chunks are cut at 1500 characters; long criteria lose their tail. Split into several chunks?
 - Every run re-embeds everything. Embed only new or changed chunks (lesson 8).
 - There is no retrieval evaluation yet (lesson 7): a small set of query -> expected trial pairs.
 - Conditions are only lower-cased; map them to a vocabulary such as MeSH?
