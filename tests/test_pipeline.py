@@ -75,3 +75,24 @@ def test_search_returns_each_trial_once(con):
     result = search(con, fake_embed(["query"])[0])
     assert sorted(result.nct_id) == ["NCT1", "NCT2", "NCT3"]
     assert list(search(con, fake_embed(["query"])[0], phases=["PHASE3"]).nct_id) == []
+
+
+def test_long_criteria_are_split_not_cut():
+    criteria = "Inclusion Criteria:\n" + "\n".join(f"* item {i} " + "x" * 90 for i in range(40))
+    chunks = chunk_embed.chunk("NCT9", "", criteria)
+    assert len(chunks) > 1
+    assert all(len(c[3]) <= chunk_embed.MAX_CHARS for c in chunks)
+    assert "item 39" in chunks[-1][3]  # the last criterion is still searchable
+    assert len({c[0] for c in chunks}) == len(chunks)  # chunk ids stay unique
+
+
+def keyword_embed(texts):
+    """Only text mentioning 'pregnant' points the same way as the query."""
+    return [[1.0 if "pregnant" in t.lower() else 0.0, 1.0] + [0.0] * 382 for t in texts]
+
+
+def test_exclusion_match_is_flagged_not_ranked(con):
+    chunk_embed.run(con, embed=keyword_embed)  # NCT1 excludes "Pregnant"
+    result = search(con, [1.0] + [0.0] * 383).set_index("nct_id")
+    assert "exclusion" not in set(result.section)
+    assert result.loc["NCT1", "exclusion_score"] > result.loc["NCT1", "score"]

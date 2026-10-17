@@ -21,5 +21,8 @@ if query:
     for row in search(con, vector, phases).itertuples():
         st.markdown(f"**[{row.title}](https://clinicaltrials.gov/study/{row.nct_id})**")
         st.caption(f"{row.nct_id} · {row.phase} · {row.sponsor} · match {row.score:.2f}")
+        if row.exclusion_score is not None and row.exclusion_score >= row.score:
+            st.warning(f"The exclusion criteria match your description at least as well "
+                       f"({row.exclusion_score:.2f}). Check them before assuming the patient fits.")
         with st.expander(f"Best matching text ({row.section})"):
             st.write(row.text)

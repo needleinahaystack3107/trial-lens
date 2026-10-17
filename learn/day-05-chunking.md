@@ -11,7 +11,11 @@ criteria.
 **In the code.** `chunk()` in `pipeline/chunk_embed.py`. Each chunk keeps its `nct_id` and
 `section`, so a result can say *why* it matched.
 
-**A trap.** A patient "with kidney disease" can match a trial that *excludes* kidney disease,
-because the words are similar. Keeping `section` on every chunk lets the app show that.
+Some sections are longer than the model can read. `pieces()` packs whole lines into several
+chunks instead of cutting the text off, so the last criteria are still searchable.
 
-**Try it.** Search for a condition and count how many top results matched on `exclusion`.
+**A trap.** A patient "with kidney disease" can match a trial that *excludes* kidney disease,
+because the words are similar. Keeping `section` on every chunk lets `pipeline/search.py` rank
+only on summary and inclusion chunks, and warn when the exclusion criteria match as well.
+
+**Try it.** Search for "pregnant woman". How many results carry the exclusion warning?
