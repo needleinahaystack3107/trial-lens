@@ -35,3 +35,4 @@ One line per day the data changed, written by `.github/workflows/daily.yml`.
 - 2026-11-16: 299 trials, 1151 chunks
 - 2026-11-17: 299 trials, 1156 chunks
 - 2026-11-18: 299 trials, 1153 chunks
+- 2026-11-19: 299 trials, 1191 chunks
